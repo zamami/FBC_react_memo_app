@@ -1,9 +1,5 @@
-import './MemoList.css';
+import "./MemoList.css";
 
 export default function MemoList() {
-  return (
-    <>
-      hello react
-    </>
-  );
+  return <>hello react</>;
 }
