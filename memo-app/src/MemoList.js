@@ -2,15 +2,10 @@ import { useState } from "react";
 import Form from "./Form";
 import "./MemoList.css";
 
-
-const initialMemos =
-    [
-        {　id: 0, content: "memo1\nメモ１の内容です。\nメモ１の内容です。\nメモ１の内容です。\n",},
-        {　id: 1, content: "memo2\nメモ2の内容です。\nメモ2の内容です。\nメモ2の内容です。\n",},
-        {　id: 2, content: "memo3\nメモ3の内容です。\nメモ3の内容です。\nメモ3の内容です。\n",},
-        {　id: 3, content: "memo4\nメモ4の内容です。\nメモ4の内容です。\nメモ4の内容です。\n",},
-    ];
-let nextMemoId = 4;
+let initialMemos =
+    localStorage.getItem("Memos") === null
+        ? []
+        : JSON.parse(localStorage.getItem("Memos"));
 
 export default function MemoList() {
 
@@ -24,19 +19,22 @@ export default function MemoList() {
 
   function handleAddMemo(){
       // 既存、新規メモを新しい配列に入れてstateで更新
-      const nextMemo = [ ...initialMemos, {id: nextMemoId++, content: text} ];
-      setMemos(nextMemo);
+      const nextMemos = [ ...memos, {id: crypto.randomUUID(), content: text} ];
+      setMemos(nextMemos);
       setSelectedMemo(null);
       setText("");
+      localStorage.setItem("Memos", JSON.stringify(nextMemos));
   }
 
   // add memo or edit memo
   function handleChangeMemo(e) {
       e.preventDefault();
       if (selectedMemo){
-          setMemos(memos.map( memo =>
+          const nextMemos = memos.map( memo =>
           memo.id === selectedMemo.id ? {...memo, content: text} : memo
-          ));
+          );
+          localStorage.setItem("Memos", JSON.stringify(nextMemos));
+          setMemos(nextMemos);
           setSelectedMemo(null);
       } else {
           handleAddMemo();
@@ -46,7 +44,9 @@ export default function MemoList() {
 
   function handleDeleteMemo() {
       if (selectedMemo){
-          setMemos(memos.filter(memo => memo.id !== selectedMemo.id));
+          const nextMemos = memos.filter(memo => memo.id !== selectedMemo.id);
+          setMemos(nextMemos);
+          localStorage.setItem("Memos", JSON.stringify(nextMemos));
           setSelectedMemo(null);
           setText("");
       }
