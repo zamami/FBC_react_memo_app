@@ -12,6 +12,7 @@ export default function MemoList() {
   const [memos, setMemos] = useState(initialMemos);
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [text, setText] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
 
   function handleTextSet(e) {
       setText(e.target.value);
@@ -24,6 +25,7 @@ export default function MemoList() {
       setSelectedMemo(null);
       setText("");
       localStorage.setItem("Memos", JSON.stringify(nextMemos));
+      setFormVisible(false);
   }
 
   // add memo or edit memo
@@ -36,12 +38,12 @@ export default function MemoList() {
           localStorage.setItem("Memos", JSON.stringify(nextMemos));
           setMemos(nextMemos);
           setSelectedMemo(null);
+          setFormVisible(false);
       } else {
           handleAddMemo();
       }
       setText("");
   }
-
   function handleDeleteMemo() {
       if (selectedMemo){
           const nextMemos = memos.filter(memo => memo.id !== selectedMemo.id);
@@ -49,6 +51,7 @@ export default function MemoList() {
           localStorage.setItem("Memos", JSON.stringify(nextMemos));
           setSelectedMemo(null);
           setText("");
+          setFormVisible(false);
       }
   }
 
@@ -56,11 +59,13 @@ export default function MemoList() {
   function handleSelectMemo(memo) {
       setSelectedMemo(memo);
       setText(memo.content);
+      setFormVisible(true);
   }
 
   function handleResetMemo() {
       setSelectedMemo(null);
       setText("");
+      setFormVisible(true);
   }
 
   return (
@@ -72,19 +77,23 @@ export default function MemoList() {
                       key={memo.id}
                       className="memo-item"
                       onClick={() => handleSelectMemo(memo)}
+
                   >
                       {memo.content.split("\n")[0]}
                   </li>
               ))}
               <li onClick={handleResetMemo}>+</li>
           </ul>
-          <Form
-              text={text}
-              handleTextSet={handleTextSet}
-              handleChangeMemo={handleChangeMemo}
-              handleDeleteMemo={handleDeleteMemo}
-              isEditing={selectedMemo !== null}
-          />
+          {formVisible && (
+              <Form
+                  text={text}
+                  handleTextSet={handleTextSet}
+                  handleChangeMemo={handleChangeMemo}
+                  handleDeleteMemo={handleDeleteMemo}
+                  isEditing={selectedMemo !== null}
+              />
+          )}
+
       </div>
       );
 
