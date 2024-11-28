@@ -69,30 +69,38 @@ export default function MemoList() {
   }
 
   return (
-      <div className="container">
-          <h1>メモ一覧</h1>
-          <ul>
-              {memos.map((memo) => (
-                  <li
-                      key={memo.id}
-                      className="memo-item"
-                      onClick={() => handleSelectMemo(memo)}
-
+      <div className="memo-list-container">
+          <div className="memo-list-header">
+              <h1>メモ一覧</h1>
+          </div>
+          <div className="memo-list-body">
+              <ul>
+                  {memos.map((memo) => (
+                      <li
+                          key={memo.id}
+                          className="memo-item"
+                          onClick={() => handleSelectMemo(memo)}
+                      >
+                          {memo.content.split("\n")[0]}
+                      </li>
+                  ))}
+                  <li className="memo-item"
+                      onClick={handleResetMemo}
                   >
-                      {memo.content.split("\n")[0]}
+                      +
                   </li>
-              ))}
-              <li onClick={handleResetMemo}>+</li>
-          </ul>
-          {formVisible && (
-              <Form
-                  text={text}
-                  handleTextSet={handleTextSet}
-                  handleChangeMemo={handleChangeMemo}
-                  handleDeleteMemo={handleDeleteMemo}
-                  isEditing={selectedMemo !== null}
-              />
-          )}
+              </ul>
+              {formVisible && (
+                  <Form
+                      text={text}
+                      handleTextSet={handleTextSet}
+                      handleChangeMemo={handleChangeMemo}
+                      handleDeleteMemo={handleDeleteMemo}
+                      isEditing={selectedMemo !== null}
+                  />
+              )}
+          </div>
+
 
       </div>
       );

@@ -1,0 +1,75 @@
+/* メモリストとフォームを囲むボディ部分 */
+.memo-list-body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* メモリスト全体のスタイル */
+.memo-list-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 40%;
+    max-width: 300px;
+}
+
+/* メモアイテムのスタイル */
+.memo-item {
+    padding: 10px;
+    border-bottom: 1px solid blue;
+    color: blue;
+    cursor: pointer;
+    text-align: left;
+}
+
+.memo-item:hover {
+    background-color: #EEEEEE;
+}
+
+/* フォーム全体のスタイル */
+form {
+    width: 60%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* テキストエリアのスタイル */
+textarea {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* ボタンを横一列に配置 */
+form .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+/* ボタンの共通スタイル */
+button {
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    flex: 1;
+    text-align: center;
+}
+
+/* ボタンの比率 */
+button:first-child {
+    flex: 7;
+}
+
+button:last-child {
+    flex: 3;
+}
