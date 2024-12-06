@@ -1,7 +1,8 @@
 export default function Form({
   text,
   handleTextSet,
-  handleChangeMemo,
+  handleCreateMemo,
+  handleUpdateMemo,
   isEditing,
   handleDeleteMemo,
 }) {
@@ -10,14 +11,19 @@ export default function Form({
       <form>
         <textarea value={text} onChange={handleTextSet}></textarea>
         <div className="button-group">
-          <button type="button" onClick={handleChangeMemo}>
-            {isEditing ? "編集" : "追加"}
-          </button>
-
-          {isEditing && (
-            <button type="button" onClick={handleDeleteMemo}>
-              削除
-            </button>
+          {isEditing ? (
+              <>
+                <button type="button" onClick={handleUpdateMemo}>
+                  編集
+                </button>
+                <button type="button" onClick={handleDeleteMemo}>
+                  削除
+                </button>
+              </>
+          ) : (
+              <button type="button" onClick={handleCreateMemo}>
+                追加
+              </button>
           )}
         </div>
       </form>

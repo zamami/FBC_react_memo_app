@@ -2,12 +2,11 @@ import { useState } from "react";
 import Form from "./Form";
 import "./MemoList.css";
 
-let initialMemos =
-  localStorage.getItem("Memos") === null
-    ? []
-    : JSON.parse(localStorage.getItem("Memos"));
-
 export default function MemoList() {
+  const initialMemos =
+      localStorage.getItem("Memos") === null
+          ? []
+          : JSON.parse(localStorage.getItem("Memos"));
   const [memos, setMemos] = useState(initialMemos);
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [text, setText] = useState("");
@@ -17,7 +16,7 @@ export default function MemoList() {
     setText(e.target.value);
   }
 
-  function handleAddMemo() {
+  function handleCreateMemo() {
     // 既存、新規メモを新しい配列に入れてstateで更新
     const nextMemos = [...memos, { id: crypto.randomUUID(), content: text }];
     setMemos(nextMemos);
@@ -27,22 +26,16 @@ export default function MemoList() {
     setFormVisible(false);
   }
 
-  // add memo or edit memo
-  function handleChangeMemo(e) {
-    e.preventDefault();
-    if (selectedMemo) {
-      const nextMemos = memos.map((memo) =>
+  function handleUpdateMemo(){
+    const nextMemos = memos.map((memo) =>
         memo.id === selectedMemo.id ? { ...memo, content: text } : memo,
-      );
-      localStorage.setItem("Memos", JSON.stringify(nextMemos));
-      setMemos(nextMemos);
-      setSelectedMemo(null);
-      setFormVisible(false);
-    } else {
-      handleAddMemo();
-    }
-    setText("");
+    );
+    localStorage.setItem("Memos", JSON.stringify(nextMemos));
+    setMemos(nextMemos);
+    setSelectedMemo(null);
+    setFormVisible(false);
   }
+
   function handleDeleteMemo() {
     if (selectedMemo) {
       const nextMemos = memos.filter((memo) => memo.id !== selectedMemo.id);
@@ -91,7 +84,8 @@ export default function MemoList() {
           <Form
             text={text}
             handleTextSet={handleTextSet}
-            handleChangeMemo={handleChangeMemo}
+            handleCreateMemo={handleCreateMemo}
+            handleUpdateMemo={handleUpdateMemo}
             handleDeleteMemo={handleDeleteMemo}
             isEditing={selectedMemo !== null}
           />
