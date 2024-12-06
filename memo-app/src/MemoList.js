@@ -16,34 +16,36 @@ export default function MemoList() {
     setText(e.target.value);
   }
 
+  function saveMemos(nextMemos) {
+    setMemos(nextMemos);
+    localStorage.setItem("Memos", JSON.stringify(nextMemos));
+  }
+
   function handleCreateMemo() {
     // 既存、新規メモを新しい配列に入れてstateで更新
     const nextMemos = [...memos, { id: crypto.randomUUID(), content: text }];
-    setMemos(nextMemos);
     setSelectedMemo(null);
     setText("");
-    localStorage.setItem("Memos", JSON.stringify(nextMemos));
     setFormVisible(false);
+    saveMemos(nextMemos);
   }
 
   function handleUpdateMemo(){
     const nextMemos = memos.map((memo) =>
         memo.id === selectedMemo.id ? { ...memo, content: text } : memo,
     );
-    localStorage.setItem("Memos", JSON.stringify(nextMemos));
-    setMemos(nextMemos);
     setSelectedMemo(null);
     setFormVisible(false);
+    saveMemos(nextMemos);
   }
 
   function handleDeleteMemo() {
     if (selectedMemo) {
       const nextMemos = memos.filter((memo) => memo.id !== selectedMemo.id);
-      setMemos(nextMemos);
-      localStorage.setItem("Memos", JSON.stringify(nextMemos));
       setSelectedMemo(null);
       setText("");
       setFormVisible(false);
+      saveMemos(nextMemos);
     }
   }
 
