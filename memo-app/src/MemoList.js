@@ -4,9 +4,9 @@ import "./MemoList.css";
 
 export default function MemoList() {
   const initialMemos =
-      localStorage.getItem("Memos") === null
-          ? []
-          : JSON.parse(localStorage.getItem("Memos"));
+    localStorage.getItem("Memos") === null
+      ? []
+      : JSON.parse(localStorage.getItem("Memos"));
   const [memos, setMemos] = useState(initialMemos);
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [text, setText] = useState("");
@@ -30,9 +30,9 @@ export default function MemoList() {
     saveMemos(nextMemos);
   }
 
-  function handleUpdateMemo(){
+  function handleUpdateMemo() {
     const nextMemos = memos.map((memo) =>
-        memo.id === selectedMemo.id ? { ...memo, content: text } : memo,
+      memo.id === selectedMemo.id ? { ...memo, content: text } : memo,
     );
     setSelectedMemo(null);
     setFormVisible(false);
