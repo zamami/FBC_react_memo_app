@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Form from "./Form";
 import "./MemoList.css";
+import LoginButton from "./LoginButton";
 
 export default function MemoList() {
   const initialMemos =
@@ -11,6 +12,7 @@ export default function MemoList() {
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [text, setText] = useState("");
   const [formVisible, setFormVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function handleTextSet(e) {
     setText(e.target.value);
@@ -62,12 +64,21 @@ export default function MemoList() {
     setFormVisible(true);
   }
 
+  function handleLoggedInChange(){
+    setIsLoggedIn(!isLoggedIn);
+  }
+
   return (
     <div className="memo-list-container">
       <div className="memo-list-header">
         <h1>メモ一覧</h1>
+        <LoginButton
+            isLoggedIn={isLoggedIn}
+            onLoggedInChange={handleLoggedInChange}
+        />
       </div>
       <div className="memo-list-body">
+
         <ul>
           {memos.map((memo) => (
             <li
@@ -90,6 +101,7 @@ export default function MemoList() {
             handleUpdateMemo={handleUpdateMemo}
             handleDeleteMemo={handleDeleteMemo}
             isEditing={selectedMemo !== null}
+            loggedIn={isLoggedIn}
           />
         )}
       </div>
