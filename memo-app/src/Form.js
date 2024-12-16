@@ -1,12 +1,16 @@
+import { useContext } from "react";
+import { LoggedInContext } from "./LoginContext";
+
 export default function Form({
   text,
   handleTextSet,
   handleCreateMemo,
   handleUpdateMemo,
   isEditing,
-  handleDeleteMemo,
-    loggedIn
+  handleDeleteMemo
 }) {
+  const { loggedIn } = useContext(LoggedInContext);
+
   return (
     <>
       <form>
