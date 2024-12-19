@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Form from "./Form";
 import "./MemoList.css";
+import LoginButton from "./LoginButton";
+import { LoginStatusProvider } from "./useLoginContext";
 
 export default function MemoList() {
   const initialMemos =
@@ -49,7 +51,6 @@ export default function MemoList() {
     }
   }
 
-  // メモを選択してstateに保存
   function handleSelectMemo(memo) {
     setSelectedMemo(memo);
     setText(memo.content);
@@ -63,36 +64,39 @@ export default function MemoList() {
   }
 
   return (
-    <div className="memo-list-container">
-      <div className="memo-list-header">
-        <h1>メモ一覧</h1>
-      </div>
-      <div className="memo-list-body">
-        <ul>
-          {memos.map((memo) => (
-            <li
-              key={memo.id}
-              className="memo-item"
-              onClick={() => handleSelectMemo(memo)}
-            >
-              {memo.content.split("\n")[0]}
+    <LoginStatusProvider>
+      <div className="memo-list-container">
+        <div className="memo-list-header">
+          <h1>メモ一覧</h1>
+          <LoginButton />
+        </div>
+        <div className="memo-list-body">
+          <ul>
+            {memos.map((memo) => (
+              <li
+                key={memo.id}
+                className="memo-item"
+                onClick={() => handleSelectMemo(memo)}
+              >
+                {memo.content.split("\n")[0]}
+              </li>
+            ))}
+            <li className="memo-item" onClick={handleResetMemo}>
+              +
             </li>
-          ))}
-          <li className="memo-item" onClick={handleResetMemo}>
-            +
-          </li>
-        </ul>
-        {formVisible && (
-          <Form
-            text={text}
-            handleTextSet={handleTextSet}
-            handleCreateMemo={handleCreateMemo}
-            handleUpdateMemo={handleUpdateMemo}
-            handleDeleteMemo={handleDeleteMemo}
-            isEditing={selectedMemo !== null}
-          />
-        )}
+          </ul>
+          {formVisible && (
+            <Form
+              text={text}
+              handleTextSet={handleTextSet}
+              handleCreateMemo={handleCreateMemo}
+              handleUpdateMemo={handleUpdateMemo}
+              handleDeleteMemo={handleDeleteMemo}
+              isEditing={selectedMemo !== null}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </LoginStatusProvider>
   );
 }
