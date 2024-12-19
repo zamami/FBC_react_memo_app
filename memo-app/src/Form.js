@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { LoggedInContext } from "./LoginContext";
+import { useLoginStatus } from "./useLoginContext";
 
 export default function Form({
   text,
@@ -9,7 +8,7 @@ export default function Form({
   isEditing,
   handleDeleteMemo
 }) {
-  const { loggedIn } = useContext(LoggedInContext);
+  const { loggedIn } = useLoginStatus();
 
   return (
     <>

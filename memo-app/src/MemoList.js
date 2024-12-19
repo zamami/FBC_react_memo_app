@@ -2,7 +2,7 @@ import { useState } from "react";
 import Form from "./Form";
 import "./MemoList.css";
 import LoginButton from "./LoginButton";
-import { LoggedInContext } from "./LoginContext";
+import { LoginStatusProvider } from "./useLoginContext";
 
 export default function MemoList() {
   const initialMemos =
@@ -13,7 +13,6 @@ export default function MemoList() {
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [text, setText] = useState("");
   const [formVisible, setFormVisible] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
 
   function handleTextSet(e) {
     setText(e.target.value);
@@ -35,7 +34,7 @@ export default function MemoList() {
 
   function handleUpdateMemo() {
     const nextMemos = memos.map((memo) =>
-      memo.id === selectedMemo.id ? { ...memo, content: text } : memo,
+      memo.id === selectedMemo.id ? { ...memo, content: text } : memo
     );
     setSelectedMemo(null);
     setFormVisible(false);
@@ -64,18 +63,12 @@ export default function MemoList() {
     setFormVisible(true);
   }
 
-  function handleLoggedInChange(){
-    setLoggedIn(!loggedIn);
-  }
-
   return (
-    <LoggedInContext.Provider value={{loggedIn}}>
+    <LoginStatusProvider>
     <div className="memo-list-container">
       <div className="memo-list-header">
         <h1>メモ一覧</h1>
-        <LoginButton
-            onLoggedInChange={handleLoggedInChange}
-        />
+        <LoginButton/>
       </div>
       <div className="memo-list-body">
 
@@ -105,6 +98,6 @@ export default function MemoList() {
         )}
       </div>
     </div>
-    </LoggedInContext.Provider>
+    </LoginStatusProvider>
   );
 }

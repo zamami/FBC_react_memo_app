@@ -1,14 +1,17 @@
-import { useContext } from "react";
 import "./MemoList.css";
-import { LoggedInContext } from "./LoginContext";
+import { useLoginStatus } from "./useLoginContext";
 
 
-export default function LoginButton({onLoggedInChange}){
-    const { loggedIn } = useContext(LoggedInContext);
+export default function LoginButton(){
+    const { loggedIn, setLoggedIn } = useLoginStatus();
+
+    function handleLoggedInChange() {
+        setLoggedIn(!loggedIn);
+    }
 
     return (
         <div className="login-button">
-            <button type="button" onClick={ onLoggedInChange }>
+            <button type="button" onClick={ handleLoggedInChange }>
                 {loggedIn ? "ログアウト" : "ログイン"}
             </button>
         </div>
