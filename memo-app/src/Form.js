@@ -1,4 +1,5 @@
 import { useLoginStatus } from "./useLoginContext";
+import "./Form.css";  // フォーム関連のスタイル
 
 export default function Form({
   text,

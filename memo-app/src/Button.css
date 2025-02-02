@@ -1,0 +1,20 @@
+/* ボタンの共通スタイル */
+button {
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    flex: 1;
+    text-align: center;
+}
+
+/* ボタンの比率 */
+button:first-child {
+    flex: 7;
+}
+
+button:last-child {
+    flex: 3;
+}

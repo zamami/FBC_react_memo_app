@@ -1,5 +1,6 @@
 import "./MemoList.css";
 import { useLoginStatus } from "./useLoginContext";
+import "./Button.css";  // ログインボタン関連のスタイル
 
 export default function LoginButton() {
   const { loggedIn, setLoggedIn } = useLoginStatus();
