@@ -1,3 +1,6 @@
+import { useLoginStatus } from "./useLoginContext";
+import "./Form.css";  // フォーム関連のスタイル
+
 export default function Form({
   text,
   handleTextSet,
@@ -6,25 +9,32 @@ export default function Form({
   isEditing,
   handleDeleteMemo,
 }) {
+  const { loggedIn } = useLoginStatus();
+
   return (
     <>
       <form>
-        <textarea value={text} onChange={handleTextSet}></textarea>
+        <textarea
+          value={text}
+          onChange={handleTextSet}
+          disabled={!loggedIn}
+        ></textarea>
         <div className="button-group">
-          {isEditing ? (
-            <>
-              <button type="button" onClick={handleUpdateMemo}>
-                編集
+          {loggedIn &&
+            (isEditing ? (
+              <>
+                <button type="button" onClick={handleUpdateMemo}>
+                  編集
+                </button>
+                <button type="button" onClick={handleDeleteMemo}>
+                  削除
+                </button>
+              </>
+            ) : (
+              <button type="button" onClick={handleCreateMemo}>
+                追加
               </button>
-              <button type="button" onClick={handleDeleteMemo}>
-                削除
-              </button>
-            </>
-          ) : (
-            <button type="button" onClick={handleCreateMemo}>
-              追加
-            </button>
-          )}
+            ))}
         </div>
       </form>
     </>
